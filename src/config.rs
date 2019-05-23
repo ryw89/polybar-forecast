@@ -14,11 +14,10 @@ pub struct Configuration {
 }
 
 pub fn get_config() -> Result<Configuration, Error> {
-    let mut dir = env::current_exe()?;
-    dir.pop();
-    dir.push("config.toml");
+    let mut config = env::home_dir().unwrap().to_str().unwrap().to_owned();
+    config.push_str("/.config/polybar-forecast/config.toml");
 
-    let mut f = File::open(dir)?;
+    let mut f = File::open(config)?;
     let mut content = String::new();
     f.read_to_string(&mut content)?;
 
